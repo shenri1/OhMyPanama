@@ -22,7 +22,7 @@ for arg in "$@"; do
     esac
 done
 
-if [ ! -f ~/local/state/ohmypanama ]; then
+if [ ! -f ~/.local/state/ohmypanama ]; then
     clear
     cat <<EOF
 Welcome to OhMyPanama!
@@ -52,7 +52,7 @@ read input
       sudo dnf update -y
       sudo dnf install -y git
       
-      mkdir -p ~/.local/state/ohmyfedora
+      mkdir -p ~/.local/state/ohmypanama
       mkdir -p ~/.config
     
     # Call ohmyfedora.sh

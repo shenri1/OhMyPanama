@@ -8,7 +8,7 @@ echo "[MODULE] Installing packages and tools.."
 PKGS_DNF="
     zsh util-linux-user git wget
     alacritty rofi-wayland
-    btop ufw apparmor-utils
+    btop ufw
     brave-browser
     keepassxc gimp ristretto
     neovim gedit code
