@@ -11,8 +11,7 @@ PKGS_DNF="
     btop ufw
     brave-browser
     keepassxc gimp ristretto
-    neovim gedit code
-    libreoffice-kf6
+    neovim gimp
     rust cargo gcc
     bat zoxide eza
     python3-pip
@@ -39,12 +38,12 @@ else
 fi
 
 # --- Terminal Text Effects (tte) ---
-echo "[+] Instaling Terminal Text Effects..."
+echo "[+] Installing Terminal Text Effects..."
 pip install terminal-text-effects --break-system-packages
 
 # --- Starship (Prompt) ---
 if ! command -v starship &> /dev/null; then
-    echo "[+] Instaling Starship..."
+    echo "[+] Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 

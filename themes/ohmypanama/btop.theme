@@ -1,0 +1,81 @@
+# Theme: OhMyFedora (Matching Alacritty)
+# Baseado na paleta do alacritty.toml fornecido
+
+# Main background
+theme[main_bg]="#121212"
+
+# Main text color
+theme[main_fg]="#dedede"
+
+# Title color for boxes
+theme[title]="#dedede"
+
+# Highlight color for keyboard shortcuts (Using Alacritty Blue)
+theme[hi_fg]="#97bedc"
+
+# Background color of selected item in processes box (Using Alacritty Selection)
+theme[selected_bg]="#474e91"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#ffffff"
+
+# Color of inactive/disabled text (Using Alacritty Black)
+theme[inactive_fg]="#929292"
+
+# Color of text appearing on top of graphs (Using Alacritty Cyan)
+theme[graph_text]="#00988e"
+
+# Background color of the percentage meters (Using Alacritty Black Bright)
+theme[meter_bg]="#474e91"
+
+# Misc colors for processes box
+theme[proc_misc]="#dedede"
+
+# CPU, Memory, Network, Proc box outline colors
+theme[cpu_box]="#97bedc"  # Blue
+theme[mem_box]="#94b979"  # Green
+theme[net_box]="#e27373"  # Red
+theme[proc_box]="#e1c0fa" # Magenta
+
+# Box divider line and small boxes line color
+theme[div_line]="#929292"
+
+# Temperature graph color (Green -> Yellow -> Red)
+theme[temp_start]="#94b979"
+theme[temp_mid]="#ffba7b"
+theme[temp_end]="#e27373"
+
+# CPU graph colors (Cyan -> Blue)
+theme[cpu_start]="#00988e"
+theme[cpu_mid]="#97bedc"
+theme[cpu_end]="#b1d8f6"
+
+# Mem/Disk free meter (Magenta -> Blue)
+theme[free_start]="#e1c0fa"
+theme[free_mid]="#b1d8f6"
+theme[free_end]="#97bedc"
+
+# Mem/Disk cached meter (Cyan -> Blue)
+theme[cached_start]="#00988e"
+theme[cached_mid]="#97bedc"
+theme[cached_end]="#b1d8f6"
+
+# Mem/Disk available meter (Yellow -> Red)
+theme[available_start]="#ffba7b"
+theme[available_mid]="#e27373"
+theme[available_end]="#e27373"
+
+# Download graph colors (Cyan -> Blue)
+theme[download_start]="#00988e"
+theme[download_mid]="#97bedc"
+theme[download_end]="#b1d8f6"
+
+# Upload graph colors (Green -> Yellow)
+theme[upload_start]="#94b979"
+theme[upload_mid]="#94b979"
+theme[upload_end]="#ffba7b"
+
+# Process box color gradient for threads, mem and cpu usage (Cyan -> Blue -> Magenta)
+theme[process_start]="#00988e"
+theme[process_mid]="#97bedc"
+theme[process_end]="#e1c0fa"
