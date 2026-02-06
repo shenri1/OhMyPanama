@@ -1,5 +1,4 @@
 # Theme: OhMyFedora (Matching Alacritty)
-# Baseado na paleta do alacritty.toml fornecido
 
 # Main background
 theme[main_bg]="#121212"
