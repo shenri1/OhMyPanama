@@ -24,8 +24,8 @@ fi
 NO_UNINSTALL=false
 for arg in "$@"; do
     case $arg in
-        --no-uninstall) 
-        NO_UNINSTALL=true; 
+        --no-uninstall)
+        NO_UNINSTALL=true;
         shift
         ;;
         *)
@@ -41,12 +41,12 @@ Welcome to OhMyPanama!
 
 OhMyPanama is a Linux Fedora flavor made by a passionate and new generation of devs.
 This is a beta version and I am working hard to make it better.
-We're combining the best tools and apps to give you an amazing experience out of the box. 
+We're combining the best tools and apps to give you an amazing experience out of the box.
 Please consider leaving a feedback at the official repo.
 
 Also, consider some advertisements:
 
-- OhMyPanama is intended to be used on personal computers, specifically fresh new installations, 
+- OhMyPanama is intended to be used on personal computers, specifically fresh new installations,
 so for your safety, consider make a backup if you already have important data.
 - This script will remove some apps like Firefox, DE games, and some default Fedora apps.
 - This script will add some 3rd party repositories like RPM Fusion, VSCode, Brave Browser, and more.
@@ -63,24 +63,14 @@ read input
     echo "Downloading and installing RPM Fusion repositories..."
     sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
           https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-          
-    # VSCode repo
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-    
-    #Brave Browser repo
-    if ! command -v brave-browser &> /dev/null; then
-        sudo dnf install -y curl
-        curl -fsS https://dl.brave.com/install.sh | sudo sh
-    fi
-    
+
     # Initial update
       sudo dnf update -y
       sudo dnf install -y git
-      
+
       mkdir -p ~/.local/state/ohmypanama
       mkdir -p ~/.config
-    
+
     # Call ohmyfedora.sh
     SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
     source "$SCRIPT_DIR/ohmypanama.sh" "$@"

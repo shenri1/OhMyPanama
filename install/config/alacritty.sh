@@ -1,7 +1,0 @@
-#!/bin/bash
-
-ALACRITTY_DIR=~/.config/alacritty
-ALACRITTY_CONFIG=$ALACRITTY_DIR/alacritty.toml
-TIMESTAMP=$(date +%d-%m-%Y %H:%M:%S)
-
-# TODO: BACKUP FUNCIONALITIES AND IMPROVEMENTS, LIKE BACKUP

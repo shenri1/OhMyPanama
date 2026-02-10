@@ -1,0 +1,24 @@
+# Shell & Utils
+zsh
+util-linux-user
+bat
+zoxide
+eza
+git
+wget
+curl
+btop
+ufw
+fzf
+fd-find
+ripgrep
+
+# Dev
+neovim
+rust
+gcc
+python3-pip
+
+# GUI Apps
+kitty
+gimp
