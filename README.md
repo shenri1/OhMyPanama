@@ -1,4 +1,4 @@
-# OhMyPanama 🇵🇦
+# OhMyPanama
 
 **A modern, opinionated Fedora Linux setup automation tool for developers**
 
@@ -21,7 +21,7 @@ OhMyPanama is a system configuration and package management automation tool desi
 
 ### Prerequisites
 
-- Fresh Fedora installation (tested on Fedora 39+)
+- Fresh Fedora installation (tested on Fedora 42+)
 - Regular user account with sudo privileges
 - Internet connection
 
@@ -53,39 +53,6 @@ The script will:
 ```bash
 sudo reboot
 ```
-
----
-
-## 📦 What Gets Installed
-
-### Shell & Terminal
-- **Zsh** - Modern shell with Oh My Zsh
-- **Starship** - Beautiful, fast prompt
-- **Kitty** - GPU-accelerated terminal
-- Modern CLI tools: `bat`, `eza`, `zoxide`, `fzf`, `ripgrep`, `fd`
-
-### Development Tools
-- **Git** - Version control
-- **VSCode** - Code editor
-- **Zed Editor** - Modern code editor
-- **Java 25 OpenJDK** - Java development
-- Build tools: `make`, `gcc`, `automake`, `kernel-devel`
-
-### System Utilities
-- **btop** - Modern system monitor
-- **lazygit** - Terminal UI for git
-- **UFW** - Uncomplicated Firewall
-
-### GUI Applications
-- **GIMP** - Image editor
-- **Brave Browser** - Privacy-focused browser
-- **Discord** - Communication
-- **Spotify** - Music streaming
-- **Proton Pass** - Password manager
-- **ZapZap** - WhatsApp client
-
-### Fonts
-- **JetBrainsMono Nerd Font** - Programming font with icons
 
 ---
 
@@ -151,13 +118,6 @@ repo-owner/repo-name | package1 package2
 Name | command -v name | https://example.com/install.sh | sh
 ```
 
-### Modifying Theme
-
-Theme files are located in `themes/ohmypanama/`. Edit:
-- `alacritty.toml` - Terminal colors
-- `btop.theme` - System monitor theme
-- `eza.yml` - File listing colors
-
 ---
 
 ## 🔧 Advanced Options
@@ -187,31 +147,6 @@ source install/config/system.sh
 
 ---
 
-## 🐛 Troubleshooting
-
-### Installation fails with "Unsupported OS"
-**Solution:** This script only supports Fedora. Verify with: `cat /etc/os-release`
-
-### DNF lock errors
-**Solution:** Wait for automatic updates to finish or run:
-```bash
-sudo rm /var/lib/dnf/lock
-```
-
-### Zsh not set as default shell
-**Solution:** Manually change shell:
-```bash
-chsh -s /usr/bin/zsh
-```
-
-### Flatpak installation fails
-**Solution:** Ensure Flathub is configured:
-```bash
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-```
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Here's how you can help:
@@ -223,11 +158,9 @@ Contributions are welcome! Here's how you can help:
 5. **Open a Pull Request**
 
 ### Areas for Contribution
-- [ ] Add support for other Fedora spins (KDE, XFCE, etc.)
 - [ ] Create uninstall script
 - [ ] Add update mechanism
 - [ ] More theme options
-- [ ] Package list presets (minimal, full, gaming, etc.)
 - [ ] Better error handling and logging
 
 ---
