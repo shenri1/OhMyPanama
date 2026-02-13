@@ -1,1 +1,3 @@
 # Format: Name | Command Test | URL | Command Execution
+curl -f https://zed.dev/install.sh | sh
+curl -fsS https://dl.brave.com/install.sh | sh

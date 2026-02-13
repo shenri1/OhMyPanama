@@ -1,6 +1,7 @@
 # Shell & Utils
-zsh
+dnf-plugins-core
 util-linux-user
+zsh
 bat
 zoxide
 eza
@@ -12,13 +13,19 @@ ufw
 fzf
 fd-find
 ripgrep
+unzip
+make 
+automake 
+gcc 
+gcc-c++ 
+kernel-devel
+java-25-openjdk.x86_64
+java-25-openjdk-devel.x86_64
 
-# Dev
-neovim
-rust
-gcc
-python3-pip
+
+# Interface and Rofi
+rofi
+kitty
 
 # GUI Apps
-kitty
 gimp

@@ -8,23 +8,19 @@ echo "[MODULE] Package Management Module Initialized..."
 # AUX FUNC: Read List (remove comments and empty lines)
 # ==============================================================================
 read_list() {
-    if [ -f "$1" ]; then
-        grep -vE '^\s*#|^\s*$' "$1"
-    fi
+    [ -f "$1" ] && grep -vE '^\s*#|^\s*$' "$1"
 }
 
 # ==============================================================================
 # 1. DNF (Fedora Native)
 # ==============================================================================
-echo "[+] Processing DNF Packages..."
+echo "[+] Checking DNF packages..."
 DNF_LIST=$(read_list "$LISTS_DIR/dnf.list")
 TO_INSTALL=""
 
 for pkg in $DNF_LIST; do
-    if rpm -q "$pkg" &> /dev/null; then
-        echo "   [OK] $pkg already installed."
-    else
-        echo "   [>>] Queued for installation: $pkg"
+    if ! rpm -q "$pkg" &> /dev/null; then
+        echo "   [>>] Queued: $pkg"
         TO_INSTALL="$TO_INSTALL $pkg"
     fi
 done
@@ -33,7 +29,7 @@ if [ -n "$TO_INSTALL" ]; then
     echo "[+] Installing queued DNF packages..."
     sudo dnf install -y $TO_INSTALL
 else
-    echo "   [OK] All DNF packages are up to date."
+    echo "   [OK] DNF packages up to date."
 fi
 
 # ==============================================================================
@@ -44,13 +40,13 @@ echo "[+] Processing COPR Repositories..."
 COPR_LIST_FILE="$LISTS_DIR/copr.list"
 
 if [ -f "$COPR_LIST_FILE" ]; then
-    # Install DNF's plugin core 
+    # Install DNF's plugin core
     sudo dnf install -y dnf-plugins-core
 
     while IFS='|' read -r repo_id packages; do
         [[ "$repo_id" =~ ^#.*$ ]] && continue
         [[ -z "$repo_id" ]] && continue
-        
+
         repo_id=$(echo "$repo_id" | xargs)
         packages=$(echo "$packages" | xargs)
 
@@ -67,15 +63,9 @@ fi
 # ==============================================================================
 # 2. FLATPAK (Universal)
 # ==============================================================================
-echo "[+] Processing Flatpak Packages..."
-
+echo "[+] Checking Flatpaks..."
 if ! command -v flatpak &> /dev/null; then
-    echo "   [!] Installing Flatpak engine..."
     sudo dnf install -y flatpak
-fi
-
-if ! flatpak remote-list | grep -q "flathub"; then
-    echo "   [+] Adding Flathub remote..."
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 fi
 
@@ -84,8 +74,6 @@ for app in $FLATPAK_LIST; do
     if ! flatpak list --app | grep -q "$app"; then
         echo "   [+] Installing Flatpak: $app"
         flatpak install -y flathub "$app"
-    else
-        echo "   [OK] $app already installed."
     fi
 done
 
@@ -117,44 +105,54 @@ else
 fi
 
 # ==============================================================================
-# 4. CARGO (Rust)
+# 4. CARGO (Rust) OBS: Now it's not available. 
 # ==============================================================================
-echo "[+] Processing Cargo (Rust) Crates..."
-if command -v cargo &> /dev/null; then
-    CARGO_LIST=$(read_list "$LISTS_DIR/cargo.list")
-    export PATH="$HOME/.cargo/bin:$PATH"
+# echo "[+] Checking Cargo crates..."
+# if command -v cargo &> /dev/null; then
+#     # Adiciona cargo ao PATH temporariamente
+#     export PATH="$HOME/.cargo/bin:$PATH"
+#     CARGO_LIST=$(read_list "$LISTS_DIR/cargo.list")
+#     for crate in $CARGO_LIST; do
+#         if ! command -v "$crate" &> /dev/null; then
+#             echo "   [+] Installing crate: $crate"
+#             cargo install "$crate"
+#         fi
+#     done
+# fi
 
-    for crate in $CARGO_LIST; do
-        if ! command -v "$crate" &> /dev/null; then
-            echo "   [+] Installing Cargo crate: $crate"
-            cargo install "$crate"
-        else
-            echo "   [OK] $crate already installed."
-        fi
-    done
-else
-    echo "   [ERROR] Cargo not found. Skipping Rust packages."
+# ==============================================================================
+# 5. PIP (Python) OBS: Now it's not available. 
+# ==============================================================================
+# echo "[+] Processing Python (Pip) Packages..."
+# PIP_LIST=$(read_list "$LISTS_DIR/pip.list")
+
+# if [ -n "$PIP_LIST" ]; then
+#     for pip_pkg in $PIP_LIST; do
+#         if ! python3 -m pip show "$pip_pkg" &> /dev/null; then
+#             echo "   [+] Installing Pip package: $pip_pkg"
+#             python3 -m pip install "$pip_pkg" --break-system-packages
+#         else
+#             echo "   [OK] $pip_pkg already installed."
+#         fi
+#     done
+# fi
+
+# ==============================================================================
+# 6. FONTS
+# ==============================================================================
+FONT_DIR="$HOME/.local/share/fonts"
+if [ ! -d "$FONT_DIR/JetBrainsMono" ]; then
+    echo "[+] Installing Nerd Fonts (JetBrainsMono)..."
+    mkdir -p "$FONT_DIR/JetBrainsMono"
+    # Baixa apenas a JetBrainsMono Nerd Font (robusta e compatível)
+    wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+    unzip -o /tmp/JetBrainsMono.zip -d "$FONT_DIR/JetBrainsMono"
+    rm /tmp/JetBrainsMono.zip
+    fc-cache -fv
 fi
 
 # ==============================================================================
-# 5. PIP (Python)
-# ==============================================================================
-echo "[+] Processing Python (Pip) Packages..."
-PIP_LIST=$(read_list "$LISTS_DIR/pip.list")
-
-if [ -n "$PIP_LIST" ]; then
-    for pip_pkg in $PIP_LIST; do
-        if ! python3 -m pip show "$pip_pkg" &> /dev/null; then
-            echo "   [+] Installing Pip package: $pip_pkg"
-            python3 -m pip install "$pip_pkg" --break-system-packages
-        else
-            echo "   [OK] $pip_pkg already installed."
-        fi
-    done
-fi
-
-# ==============================================================================
-# 6. EXTRAS / MANUALS
+# 7. EXTRAS / MANUALS
 # ==============================================================================
 echo "[+] Processing Extras..."
 
