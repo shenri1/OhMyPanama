@@ -1,34 +1,59 @@
 #!/bin/bash
 
-
-# Check if the packages are already installed
-if ! dpkg -s ohmypanama &> /dev/null 2>&1; then
+# Check if the installation marker exists
+if [ ! -f ~/.local/state/ohmypanama/installed ]; then
     echo "OhMyPanama is not installed. Please run the install.sh script first."
     exit 1
 fi
 
+# Define base install dir (current directory for development, will be /usr/share/ohmypanama for system install)
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+OHMYPANAMA_INSTALL="$SCRIPT_DIR/install"
 
-# Define base install dir
-OHMYPANAMA_INSTALL=/usr/share/ohmypanama/install
+# Verify install directory exists
+if [ ! -d "$OHMYPANAMA_INSTALL" ]; then
+    echo "Error: Installation directory not found at $OHMYPANAMA_INSTALL"
+    exit 1
+fi
+
+echo "======================================================="
+echo "          OhMyPanama Configuration Starting            "
+echo "======================================================="
+echo ""
 
 #1. Packages Installations
-source "$OHMYPANAMA_INSTALL/packages/packages.sh"
+if [ -f "$OHMYPANAMA_INSTALL/packages/packages.sh" ]; then
+    source "$OHMYPANAMA_INSTALL/packages/packages.sh"
+else
+    echo "Warning: packages.sh not found, skipping..."
+fi
 
 #2. System Configuration
-source "$OHMYPANAMA_INSTALL/config/system.sh"
+if [ -f "$OHMYPANAMA_INSTALL/config/system.sh" ]; then
+    source "$OHMYPANAMA_INSTALL/config/system.sh"
+else
+    echo "Warning: system.sh not found, skipping..."
+fi
 
 #3. Desktop Environment Configuration
-source "$OHMYPANAMA_INSTALL/config/kde.sh"
+if [ -f "$OHMYPANAMA_INSTALL/config/kde.sh" ]; then
+    source "$OHMYPANAMA_INSTALL/config/kde.sh"
+else
+    echo "Warning: kde.sh not found, skipping..."
+fi
 
 #4. Finalization
-source "$OHMYPANAMA_INSTALL/finalization/cleanup.sh"
+if [ -f "$OHMYPANAMA_INSTALL/finalization/cleanup.sh" ]; then
+    source "$OHMYPANAMA_INSTALL/finalization/cleanup.sh"
+else
+    echo "Warning: cleanup.sh not found, skipping..."
+fi
 
-# Maybe i need to delete this echos, i need to look up first
 echo ""
 echo "======================================================="
-echo "                  OhMyPanama Installation Complete with Success!!                         "
-echo "                       Please, reboot your system to apply changes.                               "
-echo "                  Also, consider leaving a review on GitHub or sharing                        "
-echo "                                  your experience on social media.                                            "
+echo "     OhMyPanama Installation Complete with Success!!   "
+echo "    Please, reboot your system to apply changes.       "
+echo "   Also, consider leaving a review on GitHub or        "
+echo "      sharing your experience on social media.         "
 echo "======================================================="
 echo ""

@@ -34,7 +34,7 @@ for arg in "$@"; do
     esac
 done
 
-if [ ! -f ~/.local/state/ohmypanama ]; then
+if [ ! -f ~/.local/state/ohmypanama/installed ]; then
     clear
     cat <<EOF
 Welcome to OhMyPanama!
@@ -54,7 +54,7 @@ so for your safety, consider make a backup if you already have important data.
 Press Enter to continue or Ctrl+C to exit.
 EOF
 
-read input
+    read input
 
     # Confirm check to see if we have dnf installed and configure
     #TODO: Add check for dnf lock
@@ -65,12 +65,18 @@ read input
           https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
     # Initial update
-      sudo dnf update -y
-      sudo dnf install -y git
+    sudo dnf update -y
+    sudo dnf install -y git
 
-      mkdir -p ~/.local/state/ohmypanama
-      mkdir -p ~/.config
+    # Create necessary directories
+    mkdir -p ~/.local/state/ohmypanama
+    mkdir -p ~/.config
 
-    # Call ohmyfedora.sh
-    SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-    source "$SCRIPT_DIR/ohmypanama.sh" "$@"
+    # Create installation marker
+    touch ~/.local/state/ohmypanama/installed
+    echo "$(date)" > ~/.local/state/ohmypanama/installed
+fi
+
+# Call ohmypanama.sh
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+source "$SCRIPT_DIR/ohmypanama.sh" "$@"
